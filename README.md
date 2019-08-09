@@ -13,11 +13,17 @@ This Action wraps [rclone](https://rclone.org) to enable syncing files and direc
 
 ### Github Actions
 ```
-action "rclone" {
-  uses = "wei/rclone@master"
-  args = "copy <source>:<source_path> <dest>:<dest_path>"
-  secrets = ["RCLONE_CONF"]
-}
+on: push
+jobs:
+  rclone:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: rclone
+      uses: wei/rclone@master
+      env:
+        RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
+      args: copy <source>:<source_path> <dest>:<dest_path>
 ```
 `RCLONE_CONF` can be omitted if [CLI arguments](https://rclone.org/flags/#backend-flags) or [environment variables](https://rclone.org/docs/#environment-variables) are supplied. `RCLONE_CONF` can also be encrypted if [`RCLONE_CONFIG_PASS`](https://rclone.org/docs/#configuration-encryption) secret is supplied.
 

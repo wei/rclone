@@ -20,7 +20,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: rclone
-      uses: wei/rclone@master
+      uses: wei/rclone@v1
       env:
         RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
       with:
